@@ -3,6 +3,7 @@
 package profile
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -13,6 +14,7 @@ import (
 	"runtime/trace"
 	"sync/atomic"
 	"syscall"
+	"time"
 )
 
 const (
@@ -128,7 +130,7 @@ func GoroutineProfile(p *Profile) { p.mode = goroutineMode }
 // by ioutil.TempDir.
 func ProfilePath(path string) func(*Profile) {
 	return func(p *Profile) {
-		p.path = path
+		p.path = filepath.Join(path, fmt.Sprintf("%v", time.Now().Unix()))
 	}
 }
 
